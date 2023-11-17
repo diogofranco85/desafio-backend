@@ -1,0 +1,171 @@
+openapi: 3.0.0
+info:
+  title: Otto - Desafio Backend
+  version: 1.0.0
+servers:
+  - url: "http://localhost:3000"
+paths:
+  /:
+    post:
+      tags:
+        - Desafio
+      summary: Create
+      description: "Rota responsável pela inserção, persistência e validação do payload"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                realties:
+                  - id: 1
+                    title: Burj Khalifa
+                  - id: 2
+                    title: Empire State Building
+                buildings:
+                  - id: 1
+                    realtyId: 1
+                    title: Torre 1
+                  - id: 2
+                    realtyId: 2
+                    title: Torre Norte2
+                  - id: 3
+                    realtyId: 2
+                    title: Torre Sul
+                  - id: 4
+                    realtyId: 2
+                    title: Torre de Vagas
+                units:
+                  - id: 1
+                    buildingId: 1
+                    number: "15"
+                    floor: 100
+                    type: apartment
+                    parkingSpaceIds:
+                      - 2
+                      - 3
+                  - id: 2
+                    buildingId: 1
+                    number: "1"
+                    type: parkingSpace
+                    floor: -1
+                  - id: 3
+                    buildingId: 1
+                    number: "2"
+                    type: parkingSpace
+                    floor: -1
+                  - id: 4
+                    buildingId: 1
+                    number: "13"
+                    type: apartment
+                    floor: 53
+                  - id: 5
+                    buildingId: 2
+                    number: "135"
+                    floor: 13
+                    type: apartment
+                    parkingSpaceIds:
+                      - 7
+                  - id: 6
+                    buildingId: 4
+                    number: A
+                    floor: 1
+                    type: parkingSpace
+                  - id: 7
+                    buildingId: 4
+                    number: B
+                    floor: 1
+                    type: parkingSpace
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                empreendimentos:
+                  - id: 1
+                    nome: Burj Khalifa
+                    torres:
+                      - id: 1
+                        nome: Torre 1
+                        unidades:
+                          - id: 1
+                            numero: "15"
+                            andar: 100
+                            tipo: apartamento
+                            vagasDeGaragemIds:
+                              - 2
+                              - 3
+                          - id: 2
+                            numero: "1"
+                            andar: -1
+                            tipo: vaga
+                            vagasDeGaragemIds: []
+                          - id: 3
+                            numero: "2"
+                            andar: -1
+                            tipo: vaga
+                            vagasDeGaragemIds: []
+                          - id: 4
+                            numero: "13"
+                            andar: 53
+                            tipo: apartamento
+                            vagasDeGaragemIds: []
+                  - id: 2
+                    nome: Empire State Building
+                    torres:
+                      - id: 2
+                        nome: Torre Norte2
+                        unidades:
+                          - id: 5
+                            numero: "135"
+                            andar: 13
+                            tipo: apartamento
+                            vagasDeGaragemIds:
+                              - 7
+                      - id: 3
+                        nome: Torre Sul
+                        unidades: []
+                      - id: 4
+                        nome: Torre de Vagas
+                        unidades:
+                          - id: 6
+                            numero: A
+                            andar: 1
+                            tipo: vaga
+                            vagasDeGaragemIds: []
+                          - id: 7
+                            numero: B
+                            andar: 1
+                            tipo: vaga
+                            vagasDeGaragemIds: []
+        "422":
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 422
+                errorMessage:
+                  - message: '"realties" is required'
+                    path:
+                      - realties
+                    type: any.required
+                    context:
+                      label: realties
+                      key: realties
+                dateTime: "2023-11-17T14:06:17.126Z"
+  /health:
+    get:
+      tags:
+        - Desafio
+      summary: Health
+      description: "Rota de teste e validar se o serviço foi iniciado"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
